@@ -101,6 +101,58 @@ class ScriptedClient(LLMClient):
         return self.responses.pop(0)
 
 
+class LivLMClient(LLMClient):
+    """
+    Sovereign local LivLM client that deterministically synthesizes valid
+    organism_sim regulatory .dna blocks from natural-language intent without
+    requiring an external Ollama daemon.
+    """
+
+    _GLOBAL_SEQ: int = 0
+
+    def __init__(self, seed: int = 42):
+        self.seed = seed
+        self.call_count = 0
+        self.calls: List[Dict[str, Any]] = []
+
+    def complete(self, system: str, messages: List[Dict[str, str]]) -> str:
+        LivLMClient._GLOBAL_SEQ += 1
+        self.call_count += 1
+        seq = LivLMClient._GLOBAL_SEQ
+        self.calls.append({"system": system, "messages": [dict(m) for m in messages]})
+        user_msg = messages[-1]["content"] if messages else "stabilize organism"
+        lower = user_msg.lower()
+
+        gene_id = f"G_LIVLM_{seq}"
+        gene_name = f"livlm_reg_{seq}"
+
+        if "compact" in lower or "settle" in lower or "low" in lower:
+            trigger = "when error < 0.08"
+            action = "(adjust compact 1)"
+            cluster = "maintain"
+        elif "inject" in lower or "shift" in lower or "high" in lower:
+            trigger = "when cusum > 6"
+            action = "(seq (adjust inject 25) (adjust cusum_reset 1))"
+            cluster = "repair"
+        else:
+            trigger = "when error > 0.25"
+            action = "(adjust explore 0.65)"
+            cluster = "repair"
+
+        return (
+            f"Synthesized regulatory genome for intent: {user_msg!r}\n"
+            f"```dna\n"
+            f"ORGANISM LIVLM_SYNTH_{seq} {{\n"
+            f'    META {{ version: "1", domain: "grn" }}\n'
+            f"    GENOME {{\n"
+            f'        GENE {gene_name} {{ id: "{gene_id}", trigger: "{trigger}", '
+            f'action: "{action}", cluster: "{cluster}" }}\n'
+            f"    }}\n"
+            f"}}\n"
+            f"```"
+        )
+
+
 # ── extraction ───────────────────────────────────────────────────────────────
 
 _FENCE = re.compile(r"```[ \t]*([A-Za-z0-9_+-]*)[ \t]*\r?\n(.*?)```", re.S)
@@ -582,6 +634,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     return 0
 
 
-__all__ = ["LLMClient", "OllamaClient", "ScriptedClient", "extract_dna", "GateResult", "gate",
-           "Alert", "AlertMonitor", "Runtime", "Reply", "Bridge", "run_async", "main",
-           "load_system_prompt", "PROMPT_PATH"]
+__all__ = ["LLMClient", "OllamaClient", "ScriptedClient", "LivLMClient", "extract_dna",
+           "GateResult", "gate", "Alert", "AlertMonitor", "Runtime", "Reply", "Bridge",
+           "run_async", "main", "load_system_prompt", "PROMPT_PATH"]

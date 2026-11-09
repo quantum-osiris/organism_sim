@@ -1,7 +1,7 @@
 # Open-ended task generation works where tasks are hard: a pre-registered study on drifting hidden multiplexers
 
 **Author:** Devin Phillip Davis · `osiris.dnalang@gmail.com`
-**Repositories:** [`organism_sim`](https://github.com/osiris-dnalang/organism_sim) · [`dnalang-core`](https://github.com/osiris-dnalang/dnalang-core) · [`bridge`](https://github.com/osiris-dnalang/bridge)
+**Repositories:** [`organism_sim`](https://github.com/quantum-osiris/organism_sim) · [`dnalang-core`](https://github.com/quantum-osiris/dnalang-core) · [`bridge`](https://github.com/quantum-osiris/bridge)
 **Version:** v0.4.0 (2026-10-01) · **License:** Apache-2.0
 **Status:** working paper. Every number below is read from a file under `results/`; every experiment
 was pre-registered (criterion committed to git before the run) and is reported whether it passed or

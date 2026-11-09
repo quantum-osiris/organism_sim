@@ -15,10 +15,10 @@ jobs:
         with: { path: organism_sim }
       # the scorecard reads bridge's result files from a sibling checkout
       - uses: actions/checkout@v4
-        with: { repository: devinphillipdavis/bridge, path: bridge }
+        with: { repository: quantum-osiris/bridge, path: bridge }
       - uses: actions/setup-python@v5
         with: { python-version: "${{ matrix.python-version }}" }
-      - run: pip install "dnalang @ git+https://github.com/devinphillipdavis/dnalang-core" -e ".[dev]" jsonschema
+      - run: pip install "dnalang @ git+https://github.com/quantum-osiris/dnalang-core" -e ".[dev]" jsonschema
       - run: ruff check --select E,F,W,I --ignore E501 organism_sim tests
       - run: pytest -q
   guards:
@@ -29,5 +29,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - run: pip install "dnalang @ git+https://github.com/devinphillipdavis/dnalang-core" -e .
+      - run: pip install "dnalang @ git+https://github.com/quantum-osiris/dnalang-core" -e .
       - run: python -m organism_sim.benchmarks.ci_guard --latency-us 600 --relay-median 150 --seeds 5

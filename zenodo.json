@@ -34,13 +34,13 @@
     },
     {
       "scheme": "url",
-      "identifier": "https://github.com/osiris-dnalang/organism_sim",
+      "identifier": "https://github.com/quantum-osiris/organism_sim",
       "relation": "isSupplementTo",
       "resource_type": "software"
     },
     {
       "scheme": "url",
-      "identifier": "https://github.com/osiris-dnalang/dnalang-core",
+      "identifier": "https://github.com/quantum-osiris/dnalang-core",
       "relation": "requires",
       "resource_type": "software"
     }

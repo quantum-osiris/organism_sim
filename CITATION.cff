@@ -9,7 +9,7 @@ authors:
 version: 0.4.0
 date-released: 2026-10-01
 license: Apache-2.0
-repository-code: https://github.com/osiris-dnalang/organism_sim
+repository-code: https://github.com/quantum-osiris/organism_sim
 abstract: >-
   Artificial-life simulation of autonomous rule-evolving agents: an XCS-lineage
   Learning Classifier System with a closed s-expression action DSL, a routed

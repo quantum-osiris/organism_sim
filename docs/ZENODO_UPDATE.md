@@ -31,7 +31,7 @@ Python 3.9+, NumPy only for the core; `jsonschema` for the contract tests. Each 
 seeds — pass a worker count as the sole argument.
 
 ```bash
-git clone https://github.com/osiris-dnalang/organism_sim && cd organism_sim
+git clone https://github.com/quantum-osiris/organism_sim && cd organism_sim
 pip install -e ".[dev]"
 pytest                                            # ~230 tests, ~3 min
 
